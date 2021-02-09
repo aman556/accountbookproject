@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Management System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <h1>Data Management System</h1>
+    <hr>
+    <h2> Update Data</h2>
+    <form action="#" th:action="@{/saveData}" th:object ="${data}" method="POST">
+
+        <input type="hidden" th:field="*{id}">
+        <label>
+            <input type="text" th:field = "*{boxName}"  class="form-control mb--4 col-4" >
+        </label>
+        <label>
+            <input type="text" th:field = "*{boxsize}"  class="form-control mb--4 col-4" >
+        </label>
+        <label>
+            <input type="text" th:field = "*{quantity}" class="form-control mb--4 col-4" >
+        </label>
+        <label>
+            <input type="text" th:field = "*{boxRate}" class="form-control mb--4 col-4" >
+        </label>
+
+        <button type="submit" class="btn btn-info col-2"> Update Data</button>
+    </form>
+</div>
+</body>
+</html>
