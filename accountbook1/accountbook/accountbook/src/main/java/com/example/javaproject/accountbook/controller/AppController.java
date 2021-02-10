@@ -50,8 +50,8 @@ public class AppController {
 
     @GetMapping("/sendEmail")
     public String sendEmail() throws MessagingException {
-        final String username = "amansharma14041998@gmail.com";
-        final String password = "8512810555";
+        final String username = "";
+        final String password = "";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
