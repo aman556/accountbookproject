@@ -8,9 +8,14 @@ import com.example.javaproject.accountbook.model.User;
 import com.example.javaproject.accountbook.repository.DataRepository;
 import com.example.javaproject.accountbook.repository.UserRepository;
 import com.example.javaproject.accountbook.service.DataService;
+import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +28,10 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+//import org.springframework.http.HttpHeaders.HttpHeaders;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,9 +57,9 @@ public class AppController {
     //private String currentUserEmail;
 
     @GetMapping("/sendEmail")
-    public String sendEmail() throws MessagingException {
-        final String username = "";
-        final String password = "";
+    public String exportExcelSentMail(HttpServletResponse response){
+        final String username = "amansharma14041998@gmail.com";
+        final String password = "8512810555";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -69,13 +77,19 @@ public class AppController {
 
         try {
 
-            Message message = new MimeMessage(session);
+            MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(companyEmail));
-            message.setSubject("Aman");
+            message.setSubject("Pooja Packaging");
             message.setText("Data Backup");
+            //message.set
+            List<Data> listData=datarepo.findByACompanyName(companyName);
+            UserExcelExporter excelExporter = new UserExcelExporter(listData);
 
+            //FileSystemResource file = new FileSystemResource(new File(excelExporter));
+            //MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            //helper.addAttachment();
             Transport.send(message);
 
 
@@ -83,7 +97,19 @@ public class AppController {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+        /*response.setContentType("application/octet-stream");
+        String header = "Content-Disposition";
+        //HttpHeaders headers = new HttpHeaders();
+        List<Data> listData=datarepo.findByACompanyName(companyName);
+        DateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormat.format(new Date());
+        String fileName = companyName+"_" + currentDateTime +".xlsx";
+        String headerValue = "attachment; filename=" + fileName;
 
+        UserExcelExporter excelExporter = new UserExcelExporter(listData);
+        ByteArrayInputStream bis = excelExporter.exportData(response);*/
+
+        //headers.add("Content-Disposition",headerValue);
         return "redirect:/datapage";
     }
 

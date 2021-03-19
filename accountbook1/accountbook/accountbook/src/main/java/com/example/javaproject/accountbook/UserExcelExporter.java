@@ -10,6 +10,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -73,7 +75,7 @@ public class UserExcelExporter {
             cell.setCellStyle(style);
 
              cell = row.createCell(1);
-            cell.setCellValue(data.getCompanyName());
+            cell.setCellValue(data.getBoxName());
             sheet.autoSizeColumn(1);
             cell.setCellStyle(style);
 
@@ -96,13 +98,17 @@ public class UserExcelExporter {
 
         }
     }
-    public void export(HttpServletResponse response) throws IOException {
+    public ByteArrayInputStream export(HttpServletResponse response) throws IOException {
         writeHeaderRow();
         writeDataRows();
-
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         ServletOutputStream outputStream = response.getOutputStream();
         workbook.write(outputStream);
+        workbook.write(out);
         workbook.close();
         outputStream.close();
+
+        return new ByteArrayInputStream(out.toByteArray());
+
     }
 }

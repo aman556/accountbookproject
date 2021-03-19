@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "props.put(“mail.smtp.ssl.trust”,",
-      "type": "java.lang.String",
-      "description": "Description for props.put(“mail.smtp.ssl.trust”,."
-  }
-] }
