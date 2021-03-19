@@ -1,1 +1,1 @@
-# accountbookproject stores all the acount details of the client of the company and consist of an email genrator which will send an email to particular client abouts its due payments.
+# accountbookproject stores all the acount details of the clients of the company and consist of an email genrator which will send an email to particular client abouts its due payments and also all the data related to the company can be downloaded in the form of excel file.
